@@ -1,4 +1,4 @@
-package org.bankApp.dto.enums;
+package org.bankApp.enums;
 
 public enum TransactionType {
     DEPOSIT,

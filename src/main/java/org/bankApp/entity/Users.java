@@ -1,7 +1,7 @@
 package org.bankApp.entity;
 
 import jakarta.persistence.*;
-import org.bankApp.dto.enums.Role;
+import org.bankApp.enums.Role;
 
 import java.time.LocalDateTime;
 import java.util.List;

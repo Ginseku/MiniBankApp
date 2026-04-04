@@ -1,8 +1,8 @@
 package org.bankApp.entity;
 
 import jakarta.persistence.*;
-import org.bankApp.dto.enums.TransactionStatus;
-import org.bankApp.dto.enums.TransactionType;
+import org.bankApp.enums.TransactionStatus;
+import org.bankApp.enums.TransactionType;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
