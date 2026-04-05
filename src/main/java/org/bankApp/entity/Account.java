@@ -18,6 +18,7 @@ public class Account {
     private Users user;
     private BigDecimal balance;
     private String currency;
+    @Version// нужен для того что бы менялась версия с 1 на 2 и тд. Таким образом никто случайно не перезапишет данные версии 1 при одновременном чтении и записи
     private Long version;
     private LocalDateTime createdAt;
     @OneToMany(mappedBy = "fromAccount")
