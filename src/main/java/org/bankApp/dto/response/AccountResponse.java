@@ -4,5 +4,5 @@ import org.bankApp.entity.Users;
 
 import java.math.BigDecimal;
 
-public record AccountResponse(Users users, BigDecimal balance, String currency) {
+public record AccountResponse(Long id, Long user_id, BigDecimal balance, String currency) {
 }
