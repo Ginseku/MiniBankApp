@@ -24,16 +24,16 @@ public class SecurityConfig {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/api/auth/**").permitAll()
+                        .requestMatchers("/api/**").permitAll()
                         .requestMatchers("/deleteUser").hasRole("ADMIN")
                         .anyRequest().authenticated())
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .addFilterBefore(jwtFilterChain, UsernamePasswordAuthenticationFilter.class)
-                .exceptionHandling(ex -> ex
-                        .authenticationEntryPoint((request, response, authException) ->
-                                response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized"))
-                );
+                .addFilterBefore(jwtFilterChain, UsernamePasswordAuthenticationFilter.class);
+//                .exceptionHandling(ex -> ex
+//                        .authenticationEntryPoint((request, response, authException) ->
+//                                response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized"))
+//                );
         return http.build();
     }
     @Bean
