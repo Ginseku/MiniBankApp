@@ -1,6 +1,7 @@
 package org.bankApp.controller;
 
 import jakarta.validation.Valid;
+import org.bankApp.dto.request.LoginRequest;
 import org.bankApp.dto.request.RegisterRequest;
 import org.bankApp.service.AuthService;
 import org.springframework.http.HttpStatus;
@@ -20,13 +21,14 @@ public class AuthController {
         this.authService = authService;
     }
 
-    @PostMapping("/register")
+    @PostMapping("auth/register")
     public ResponseEntity<String> registerUser(@Valid @RequestBody RegisterRequest request){
         return new ResponseEntity<>(authService.registerUser(request), HttpStatus.CREATED);
     }
 
     @PostMapping("/auth/login")
-    public void loginUser(){
+    public ResponseEntity<String> loginUser(@Valid @RequestBody LoginRequest request){
+        return new ResponseEntity<>(authService.loginUser(request), HttpStatus.ACCEPTED);
 
     }
 
