@@ -1,0 +1,1 @@
+INSERT INTO users(email, password, full_name, role) VALUES('admin@bank.com','$2a$10$kZhVI6rHj4xYhGW/P1pqfuYuRb06Q7hAac/edRao6yGCQYdK2sWYC', 'Admin', 'ADMIN')
