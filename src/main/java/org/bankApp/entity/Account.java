@@ -16,7 +16,8 @@ public class Account {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private Users user;
-    private BigDecimal balance;
+    @Column(nullable = false)
+    private BigDecimal balance = BigDecimal.ZERO;
     private String currency;
     @Version// нужен для того что бы менялась версия с 1 на 2 и тд. Таким образом никто случайно не перезапишет данные версии 1 при одновременном чтении и записи
     private Long version;
