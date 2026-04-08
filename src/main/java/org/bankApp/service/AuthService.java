@@ -29,6 +29,9 @@ public class AuthService {
     }
 
     public String registerUser(RegisterRequest request){
+        if (usersRepository.findByEmail(request.email()).isPresent()) { // if email already exist - throw exception
+            throw new RuntimeException("Email already exists");
+        }
         UserDetails users = new UserPrinciples(usersRepository.save(mapper.toEntity(request)));
         return jwtService.createToken(users);
     }
