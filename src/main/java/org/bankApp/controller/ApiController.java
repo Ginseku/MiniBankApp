@@ -1,6 +1,7 @@
 package org.bankApp.controller;
 
 import org.bankApp.dto.request.CreateAccountCurrencyRequest;
+import org.bankApp.dto.response.CreateAccountResponse;
 import org.bankApp.entity.Users;
 import org.bankApp.service.ApiService;
 import org.springframework.http.HttpStatus;
@@ -27,9 +28,8 @@ public class ApiController {
     }
 
     @PostMapping("/createAccount")
-    public ResponseEntity<String> createAccount(@RequestBody CreateAccountCurrencyRequest request){
-        apiService.createAccount(request);
-        return ResponseEntity.status(HttpStatus.CREATED).body("Account created");
+    public ResponseEntity<CreateAccountResponse> createAccount(@RequestBody CreateAccountCurrencyRequest request){
+        return ResponseEntity.status(HttpStatus.CREATED).body(apiService.createAccount(request));
     }
 
 }
