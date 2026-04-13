@@ -7,5 +7,5 @@ import org.bankApp.enums.TransactionType;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-public record TransactionResponse (Long id, Long from_account, Long to_account, BigDecimal amount, TransactionStatus status, TransactionType type, LocalDateTime createdAt){
+public record TransactionResponse (Long from_account, Long to_account, BigDecimal amount, TransactionStatus status, TransactionType type, LocalDateTime createdAt){
 }

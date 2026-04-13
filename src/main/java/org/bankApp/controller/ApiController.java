@@ -1,7 +1,10 @@
 package org.bankApp.controller;
 
+import jakarta.validation.Valid;
 import org.bankApp.dto.request.CreateAccountCurrencyRequest;
+import org.bankApp.dto.request.TransferRequest;
 import org.bankApp.dto.response.CreateAccountResponse;
+import org.bankApp.dto.response.TransactionResponse;
 import org.bankApp.entity.Users;
 import org.bankApp.service.ApiService;
 import org.springframework.http.HttpStatus;
@@ -32,4 +35,8 @@ public class ApiController {
         return ResponseEntity.status(HttpStatus.CREATED).body(apiService.createAccount(request));
     }
 
+    @PostMapping("/createTransaction")
+    public ResponseEntity<TransactionResponse> creteTransaction(@Valid @RequestBody TransferRequest request){
+        return ResponseEntity.status(HttpStatus.OK).body(apiService.createTransaction(request));
+    }
 }
