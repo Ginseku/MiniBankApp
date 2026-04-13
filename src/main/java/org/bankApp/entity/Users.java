@@ -15,20 +15,22 @@ public class Users {
     private Long id;
     private String email;
     private String password;
-
     private String fullName;
     private LocalDateTime createdAt;
+    @Column(name = "is_locked")
+    private Boolean isLocked = false;
     @Enumerated(EnumType.STRING)
     private Role role;
     @OneToMany(mappedBy = "user")
     private List<Account> account;
 
-    public Users(Long id, String email, String password, String fullName, LocalDateTime createdAt, Role role, List<Account> account) {
+    public Users(Long id, String email, String password, String fullName, LocalDateTime createdAt, boolean isLocked, Role role, List<Account> account) {
         this.id = id;
         this.email = email;
         this.password = password;
         this.fullName = fullName;
         this.createdAt = createdAt;
+        this.isLocked = isLocked;
         this.role = role;
         this.account = account;
     }
@@ -115,5 +117,13 @@ public class Users {
                 ", role=" + role +
                 ", account=" + account +
                 '}';
+    }
+
+    public boolean isLocked() {
+        return isLocked;
+    }
+
+    public void setLocked(boolean locked) {
+        isLocked = locked;
     }
 }
