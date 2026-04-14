@@ -3,7 +3,6 @@ package org.bankApp.service;
 import org.bankApp.dto.Mapper;
 import org.bankApp.dto.request.LoginRequest;
 import org.bankApp.dto.request.RegisterRequest;
-import org.bankApp.entity.UserPrinciples;
 import org.bankApp.entity.Users;
 import org.bankApp.repository.UsersRepository;
 import org.bankApp.security.JwtService;
@@ -17,7 +16,6 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import java.util.Optional;
 

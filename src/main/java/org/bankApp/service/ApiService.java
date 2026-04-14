@@ -1,6 +1,8 @@
 package org.bankApp.service;
 
+import org.bankApp.enums.Role;
 import org.bankApp.exception.*;
+import org.bankApp.repository.ApiLogRepository;
 import org.bankApp.saver.LogSaver;
 import org.bankApp.dto.Mapper;
 import org.bankApp.dto.request.CreateAccountCurrencyRequest;
@@ -14,6 +16,9 @@ import org.bankApp.repository.AccountRepository;
 import org.bankApp.repository.UsersRepository;
 import org.bankApp.saver.TransactionSaver;
 import org.bankApp.security.JwtService;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,14 +35,16 @@ public class ApiService {
     private final Mapper mapper;
     private final LogSaver logSaver;
     private final TransactionSaver transactionSaver;
+    private final ApiLogRepository apiLogRepository;
 
-    public ApiService(UsersRepository usersRepository, JwtService jwtService, AccountRepository accountRepository, Mapper mapper, LogSaver logSaver, TransactionSaver transactionSaver) {
+    public ApiService(UsersRepository usersRepository, JwtService jwtService, AccountRepository accountRepository, Mapper mapper, LogSaver logSaver, TransactionSaver transactionSaver, ApiLogRepository apiLogRepository) {
         this.usersRepository = usersRepository;
         this.jwtService = jwtService;
         this.accountRepository = accountRepository;
         this.mapper = mapper;
         this.logSaver = logSaver;
         this.transactionSaver = transactionSaver;
+        this.apiLogRepository = apiLogRepository;
     }
 
     @Transactional
@@ -102,7 +109,13 @@ public class ApiService {
     }
 
     public List<Users> getAllUsersByAdmin() {
-        return usersRepository.findAll();
+        Pageable pageable = PageRequest.of(0,5, Sort.by("createdAt").descending());
+        return usersRepository.findAll(pageable).getContent();
+    }
+
+    public List<ApiLog> getLogsByAdmin(){
+        Pageable pageable = PageRequest.of(0,5, Sort.by("createdAt").descending());
+        return apiLogRepository.findAll(pageable).getContent();
     }
 
     public void deleteUserByAdmin(Long id) {
@@ -116,6 +129,13 @@ public class ApiService {
         Account saved = accountRepository.save(mapper.toAccount(request, users));
         return new CreateAccountResponse(saved.getCurrency());
 
+    }
+
+    public void createAdminById(Long id){
+        Users users = usersRepository.findById(id)
+                .orElseThrow( () -> new UserNotFoundException(id));
+        users.setRole(Role.ADMIN);
+        usersRepository.save(users);
     }
 
 }
