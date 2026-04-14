@@ -5,21 +5,22 @@ import org.bankApp.dto.request.CreateAccountCurrencyRequest;
 import org.bankApp.dto.response.CreateAccountResponse;
 import org.bankApp.entity.Account;
 import org.bankApp.entity.Users;
+import org.bankApp.enums.Role;
 import org.bankApp.exception.UserNotFoundException;
 import org.bankApp.repository.AccountRepository;
 import org.bankApp.repository.UsersRepository;
 import org.bankApp.security.JwtService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
+import org.mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.when;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class ApiServiceTest {
@@ -65,5 +66,33 @@ class ApiServiceTest {
         assertThrows(UserNotFoundException.class, () -> apiService.createAccount(request));
 
     }
+
+    @Test
+    void createAdmin_ShouldReturnAdminRole(){
+        Long userId = 1L;
+
+        Users users = new Users();
+
+        users.setId(userId);
+        users.setRole(Role.USER);
+
+        when(usersRepository.findById(1L)).thenReturn(Optional.of(users));
+
+        apiService.createAdminById(userId);
+
+        assertEquals(Role.ADMIN, users.getRole());
+        verify(usersRepository).save(users);
+    }
+
+    @Test
+    void createAdmin_WithWrongUserId_ShouldReturnException(){
+        Long userId = 1L;
+
+        when(usersRepository.findById(userId)).thenReturn(Optional.empty());
+
+        assertThrows(UserNotFoundException.class, () -> apiService.createAdminById(userId));
+        verify(usersRepository, never()).save(any());
+    }
+
 
 }
